@@ -31,7 +31,8 @@ class LoginFragment : Fragment() {
 
     private fun initListeners(){
         binding.btnLogin.setOnClickListener{
-            findNavController().navigate(R.id.action_global_homeFragment)
+            validateData()
+            //findNavController().navigate(R.id.action_global_homeFragment)
         }
 
         binding.btnRegister.setOnClickListener{
@@ -41,6 +42,10 @@ class LoginFragment : Fragment() {
         binding.btnRecovery.setOnClickListener{
             findNavController().navigate(R.id.action_loginFragment_to_recoverAccountFragment)
         }
+    }
+
+    private fun validateData(){
+
     }
 
     //setar binding como nulo ao sair da tela
