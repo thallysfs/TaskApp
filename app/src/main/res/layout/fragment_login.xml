@@ -20,45 +20,43 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="E-mail"
+            android:text="@string/email_text"
             android:textColor="@color/white"
             />
         <EditText
+            tools:ignore="Autofill"
             android:id="@+id/editEmail"
+            style="@style/EditTextTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            android:background="@drawable/bg_edit_text"
-            android:padding="16dp"
             android:layout_marginTop="4dp"
-            android:hint="Digite seu e-mail" />
+            android:hint="@string/email_edit_hint" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Senha"
+            android:text="@string/password_text"
             android:textColor="@color/white"
             />
         <EditText
+            tools:ignore="Autofill"
             android:id="@+id/editPassword"
+            style="@style/EditTextTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_edit_text"
-            android:padding="16dp"
             android:layout_marginTop="4dp"
             android:inputType="textPassword"
-            android:hint="Digite sua senha" />
+            android:hint="@string/password_edit_hint" />
 
         <Button
             android:id="@+id/btn_login"
+            style="@style/ButtonTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_btn"
-            app:backgroundTint="@null"
-            android:textColor="@color/color_default"
-            android:text="Login"
+            android:text="@string/button_text_login_fragment"
             />
         
         <LinearLayout
@@ -72,7 +70,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Criar conta"
+                android:text="@string/button_text_register_login_fragment"
                 android:textColor="@color/white"
                 />
 
@@ -81,7 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
-                android:text="Recuperar conta"
+                android:text="@string/button_text_register_recover_fragment"
                 android:textColor="@color/white"
                 />
 
