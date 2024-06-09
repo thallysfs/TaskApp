@@ -13,6 +13,7 @@ import com.example.taskapp.data.model.Status
 import com.example.taskapp.data.model.Task
 import com.example.taskapp.databinding.FragmentTodoBinding
 import com.example.taskapp.ui.adapter.TaskAdapter
+import com.example.taskapp.ui.adapter.TaskTopAdapter
 
 class TodoFragment : Fragment() {
 
@@ -20,6 +21,7 @@ class TodoFragment : Fragment() {
     private val binding get() = _binding!!
 
     lateinit var taskAdapter: TaskAdapter
+    lateinit var taskTopAdapter: TaskTopAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +36,9 @@ class TodoFragment : Fragment() {
 
         initListener()
 
-        initRecyclerView(getTasks())
+        initRecyclerView()
+
+        getTasks()
     }
 
     private fun initListener(){
@@ -43,14 +47,20 @@ class TodoFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(taskLists: List<Task>){
-        taskAdapter = TaskAdapter(requireContext(),taskLists) { task, option ->
+    private fun initRecyclerView() {
+        taskTopAdapter = TaskTopAdapter() { task, option ->
             optionSelected(task, option)
         }
 
-        binding.rvTasks.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvTasks.setHasFixedSize(true)
-        binding.rvTasks.adapter = taskAdapter
+        taskAdapter = TaskAdapter(requireContext()) { task, option ->
+            optionSelected(task, option)
+        }
+
+        with(binding.rvTasks) {
+            layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
+            adapter = taskAdapter
+        }
     }
 
     private fun optionSelected(task: Task, option: Int){
@@ -70,12 +80,21 @@ class TodoFragment : Fragment() {
         }
     }
 
-    private fun getTasks() = listOf(
-        Task("0", "Criar nova tela do app", Status.TODO),
-        Task("1", "Criar nova tela do app", Status.TODO),
-        Task("2", "Criar nova tela do app", Status.TODO),
-        Task("3", "Criar nova tela do app", Status.TODO),
-    )
+    private fun getTasks() {
+        val taskTopList = listOf(
+            Task("0", "Criar nova tela do app", Status.TODO),
+        )
+
+        val taskList = listOf(
+            Task("0", "Criar nova tela do app", Status.TODO),
+            Task("1", "Criar nova tela do app", Status.TODO),
+            Task("2", "Criar nova tela do app", Status.TODO),
+            Task("3", "Criar nova tela do app", Status.TODO),
+        )
+
+        taskTopAdapter.submitList(taskTopList)
+        taskAdapter.submitList(taskList)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

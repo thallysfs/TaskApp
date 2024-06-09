@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taskapp.R
 import com.example.taskapp.data.model.Status
@@ -23,6 +24,15 @@ class TaskAdapter(
         val SELECT_EDIT: Int = 3
         val SELECT_DETAILS: Int = 4
         val SELECT_NEXT: Int = 5
+
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Task>(){
+            override fun areItemsTheSame(oldItem: Task, newItem: Task): Boolean {
+                return oldItem.id == newItem.id && oldItem.description == newItem.description
+            }
+            override fun areContentsTheSame(oldItem: Task, newItem: Task): Boolean {
+                return oldItem == newItem && oldItem.description == newItem.description
+            }
+        }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(
