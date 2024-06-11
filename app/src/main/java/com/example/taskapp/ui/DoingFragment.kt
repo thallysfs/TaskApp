@@ -37,7 +37,7 @@ class DoingFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        taskAdapter = TaskAdapter(requireContext()) { task, option ->
+        taskAdapter = TaskAdapter(requireContext() ) { task, option ->
             optionSelected(task, option)
         }
 

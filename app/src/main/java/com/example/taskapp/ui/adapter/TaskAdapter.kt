@@ -14,7 +14,6 @@ import com.example.taskapp.databinding.ItemTaskBinding
 
 class TaskAdapter(
     private val context: Context,
-    private val taskList: List<Task>,
     private val taskSelected: (Task, Int) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.MyViewHolder>() {
 
