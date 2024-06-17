@@ -34,6 +34,11 @@
     <string name="text_title_toolbar_recover_account_fragment">Recuperar conta</string>
     <string name="text_button_toolbar_recover_account_fragment">Enviar</string>
 
+    <!--    Home fragment   -->
+    <string name="text_title_dialog_confirm_logout">Deseja sair da sua conta?</string>
+    <string name="text_button_dialog_confirm_logout">Confirmar</string>
+    <string name="text_message_dialog_confirm_logout">Aperte em confirmar para sair da sua conta.</string>
+
     <!--    Form task Fragment-->
     <string name="description_empty_form_task_fragment">Preencha uma descrição</string>
     <string name="text_title_form_task_fragment">Nova tarefa</string>
