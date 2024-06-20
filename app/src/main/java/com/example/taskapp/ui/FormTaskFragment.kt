@@ -6,16 +6,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
 import com.example.taskapp.R
+import com.example.taskapp.data.model.Status
+import com.example.taskapp.data.model.Task
 import com.example.taskapp.databinding.FragmentFormTaskBinding
 import com.example.taskapp.util.initToolbar
 import com.example.taskapp.util.showButtonSheet
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
 
 class FormTaskFragment : Fragment() {
 
     private var _binding: FragmentFormTaskBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var task: Task
+    private var status: Status = Status.TODO
+    private var newTask: Boolean = true
+
+    private lateinit var reference: DatabaseReference
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,12 +45,23 @@ class FormTaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initToolbar(binding.toolbar)
 
+        reference = Firebase.database.reference
+        auth = Firebase.auth
+
         initListeners()
     }
 
     private fun initListeners(){
         binding.btnSave.setOnClickListener{
             validateData()
+        }
+
+        binding.rgStatus.setOnCheckedChangeListener{ _, id ->
+            when(id){
+                R.id.rbTodo -> Status.TODO
+                R.id.rbDoing -> Status.DOING
+                else -> Status.DONE
+            }
         }
     }
 
@@ -44,10 +70,26 @@ class FormTaskFragment : Fragment() {
         val description = binding.editDescription.text.toString().trim()
 
         if(description.isNotEmpty()){
-            Toast.makeText(requireContext(), "Salvo com sucesso", Toast.LENGTH_SHORT).show()
+
+            binding.progressBar.isVisible = true
+
+            if(newTask) task = Task()
+            task.id = reference.database.reference.push().key ?: ""
+            task.description = description
+            task.status = status
+
+            saveTask()
+            //Toast.makeText(requireContext(), "Salvo com sucesso", Toast.LENGTH_SHORT).show()
         }else {
             showButtonSheet(message = getString(R.string.description_empty_form_task_fragment))
         }
+    }
+
+    private fun saveTask(){
+        reference
+            .child("tasks")
+            .child(auth.currentUser?.uid ?: "")
+            .child(task.id)
     }
 
     override fun onDestroyView() {
