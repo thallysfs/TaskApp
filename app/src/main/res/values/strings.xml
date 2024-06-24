@@ -16,6 +16,14 @@
     <string name="password_empty">Preencha sua senha</string>
     <string name="email_edit_hint">Informe seu e-mail</string>
     <string name="password_edit_hint">Informe sua senha</string>
+    <string name="error_generic">Ocorreu um erro, tente novamente</string>
+    <string name="text_list_task_empty">Nenhuma tarefa cadastrada</string>
+    <string name="text_load_list_task">Aguarde, carregando…</string>
+    <string name="text_delete_success_task">Tarefa removida com sucesso</string>
+    <string name="text_button_dialog_confirm_logout">Confirmar</string>
+    <string name="text_title_dialog_delete">Deseja remover esta tarefa?</string>
+    <string name="text_message_dialog_delete">Aperte em confirmar para remover esta tarefa</string>
+
 
     <!--    login fragment-->
     <string name="button_text_login_fragment">Login</string>
@@ -37,7 +45,6 @@
 
     <!--    Home fragment   -->
     <string name="text_title_dialog_confirm_logout">Deseja sair da sua conta?</string>
-    <string name="text_button_dialog_confirm_logout">Confirmar</string>
     <string name="text_message_dialog_confirm_logout">Aperte em confirmar para sair da sua conta.</string>
 
     <!--    Form task Fragment-->
@@ -47,4 +54,5 @@
     <string name="hint_edit_description_form_task_fragment">Ex: Lavar roupa</string>
     <string name="text_status_form_task_fragment">Ex: Lavar roupa</string>
     <string name="btn_text_form_task_fragment">Salvar</string>
+    <string name="text_save_success_frm_task_fragment">Tarefa salva com sucesso</string>
 </resources>
