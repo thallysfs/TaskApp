@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.taskapp.R
@@ -32,6 +33,8 @@ class TodoFragment : Fragment() {
 
     private lateinit var reference: DatabaseReference
     private lateinit var auth: FirebaseAuth
+
+    private val viewModel: TaskViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -60,8 +63,13 @@ class TodoFragment : Fragment() {
 
     private fun initListener() {
         binding.fabAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_formTaskFragment)
+            val action =
+                HomeFragmentDirections
+                    .actionHomeFragmentToFormTaskFragment(null)
+            findNavController().navigate(action)
         }
+
+        observeViewModel()
     }
 
     private fun initRecyclerView() {
@@ -74,6 +82,30 @@ class TodoFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = taskAdapter
+        }
+    }
+
+    private fun observeViewModel() {
+        viewModel.taskUpdate.observe(viewLifecycleOwner) { updateTask ->
+            if (updateTask.status == Status.TODO) {
+                // Armazena a lista atual do adapter
+                val oldList = taskAdapter.currentList
+
+                // Gera uma nova lista atualizada a partir da lista antiga
+                val newList =
+                    oldList.toMutableList().apply {
+                        find { it.id == updateTask.id }?.description = updateTask.description
+                    }
+
+                // Armazena a posição da tarefa a ser atualizada
+                val position = newList.indexOfFirst { it.id == updateTask.id }
+
+                // Envia a lista atualizada pro adapter
+                taskAdapter.submitList(newList)
+
+                // Atualiza tarefa pela posição do adapter
+                taskAdapter.notifyItemChanged(position)
+            }
         }
     }
 
@@ -91,7 +123,10 @@ class TodoFragment : Fragment() {
                 )
             }
             TaskAdapter.SELECT_EDIT -> {
-                Toast.makeText(requireContext(), "Editando ${task.description}", Toast.LENGTH_SHORT).show()
+                val action =
+                    HomeFragmentDirections
+                        .actionHomeFragmentToFormTaskFragment(task)
+                findNavController().navigate(action)
             }
             TaskAdapter.SELECT_DETAILS -> {
                 Toast.makeText(requireContext(), "Detalhes ${task.description}", Toast.LENGTH_SHORT).show()
