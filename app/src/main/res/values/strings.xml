@@ -43,6 +43,13 @@
     <string name="text_button_toolbar_recover_account_fragment">Enviar</string>
     <string name="text_message_toolbar_recover_account_fragment">Um link foi enviado para seu e-mail</string>
 
+    <!--    Erros Firebase Auth-->
+    <string name="account_not_registered">Informe se e-mail de cadastro para receber \num link para alteração da senha</string>
+    <string name="invalida_email_register">Insira um e-mail válido</string>
+    <string name="invalid_password_register">Insira uma senha válida</string>">
+    <string name="email_in_use">E-mail em uso</string>">
+    <string name="strong_password_register">Informe uma senha mais forte</string>
+
     <!--    Home fragment   -->
     <string name="text_title_dialog_confirm_logout">Deseja sair da sua conta?</string>
     <string name="text_message_dialog_confirm_logout">Aperte em confirmar para sair da sua conta.</string>
