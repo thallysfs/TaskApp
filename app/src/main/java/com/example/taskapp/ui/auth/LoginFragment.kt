@@ -4,22 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.taskapp.R
 import com.example.taskapp.databinding.FragmentLoginBinding
+import com.example.taskapp.ui.BaseFragment
+import com.example.taskapp.util.FirebaseHelper
 import com.example.taskapp.util.showButtonSheet
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment() {
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var auth: FirebaseAuth
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,8 +30,6 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?,
     ) {
         super.onViewCreated(view, savedInstanceState)
-
-        auth = Firebase.auth
 
         initListeners()
     }
@@ -68,6 +61,9 @@ class LoginFragment : Fragment() {
 
         if (email.isNotEmpty()) {
             if (password.isNotEmpty()) {
+                // função para esconder o teclado do BaseFragment
+                hideKeyboard()
+
                 binding.progressBar.isVisible = true
 
                 loginUser(email, password)
@@ -83,7 +79,8 @@ class LoginFragment : Fragment() {
         email: String,
         password: String,
     ) {
-        auth
+        FirebaseHelper
+            .getAuth()
             .signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
@@ -92,7 +89,9 @@ class LoginFragment : Fragment() {
                     // Log.i("LoginFragment", "Error: ${task.exception}")
                     binding.progressBar.isVisible = false
 
-                    Toast.makeText(requireContext(), task.exception?.message, Toast.LENGTH_SHORT).show()
+                    showButtonSheet(
+                        message = getString(FirebaseHelper.valideError(task.exception?.message.toString())),
+                    )
                 }
             }
     }

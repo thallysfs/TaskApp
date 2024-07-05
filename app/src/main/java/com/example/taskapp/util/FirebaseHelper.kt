@@ -8,7 +8,7 @@ import com.google.firebase.ktx.Firebase
 class FirebaseHelper {
     companion object {
         // iniciando firebase
-        fun getDatabese() = Firebase.database.reference
+        fun getDatabase() = Firebase.database.reference
 
         // pegando instância do auth
         fun getAuth() = FirebaseAuth.getInstance()
